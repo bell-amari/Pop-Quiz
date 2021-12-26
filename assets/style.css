@@ -1,0 +1,25 @@
+:root{
+    --color-light: #9EB3C2;
+    --color-dark: #21295C;
+}
+/* HTML ELEMENTS */
+body {
+    margin: 0;
+}
+header {
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    color: var(--color-dark);
+}
+
+/* ID AND CLASS */
+#body_header{
+    text-transform: uppercase;
+}
+#high_score_view{
+
+}
+#time_count{
+    
+}
