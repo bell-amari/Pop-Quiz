@@ -8,13 +8,14 @@ var btn = window.document.querySelector("#clicker");
 var ans_btn = window.document.querySelector("#answer_button");
 var note = window.document.querySelector("#note");
 var time = window.document.querySelector("#time_count");
-var input = window.document.querySelector("#input");
+var input = window.document.querySelector("#user_input");
 var saveBtn = window.document.querySelector("#save_btn");
 const wrong = "The answer you have chosen was incorrect";
-const correct = "Great Job! Your answer was correct!"
+const correct = "Great Job! Your answer was correct!";
 var hold_selection = 0;
 var quizNumber = 0;
 var timeCount = 100;
+var highScores = []; 
 time.textContent = "Time: " + timeCount;
 
 // Runs when button is clicked
@@ -24,16 +25,26 @@ btn.addEventListener("click", function(){
     btn.remove();
 }); 
 
+saveBtn.addEventListener("click", function(){
+    var listItemEl = document.createElement("li");
+    listItemEl.textContent = highScoreObj.ini + " | " + highScoreObj.score;
+    list.appendChild(listItemEl);
+});
+
 function checkAnswers(answer){
     if (answer === hold_selection) {
         note.textContent = correct;
+        note.style.color = "green";
     }
     if (answer !== hold_selection){
         note.textContent = wrong;
+        note.style.color = "red";
         time.textContent = "Time: " + (timeCount -= 25);
     }
         
 }
+
+
 
 function callQuestions(){
     switch(quizNumber){
@@ -54,7 +65,7 @@ function callQuestions(){
             break;
         case 4:
             question.replaceChildren();
-            list.remove();
+            list.replaceChildren();
             note.remove();
             input.hidden = false;
             saveBtn.hidden = false;
@@ -68,7 +79,6 @@ var compileQuestion = function(q, answer1, answer2, answer3, answer4, holdAnswer
 
     var listItemEl = document.createElement("li");
     var liBtn = document.createElement("button");
-    listItemEl.className = "";
     liBtn.textContent = answer1;
     list.appendChild(listItemEl);
     listItemEl.appendChild(liBtn);
@@ -82,7 +92,6 @@ var compileQuestion = function(q, answer1, answer2, answer3, answer4, holdAnswer
 
     var listItemEl1 = document.createElement("li");
     var liBtn = document.createElement("button");
-    listItemEl1.className = "";
     liBtn.textContent = answer2;
     list.appendChild(listItemEl1);
     listItemEl1.appendChild(liBtn);
@@ -95,7 +104,6 @@ var compileQuestion = function(q, answer1, answer2, answer3, answer4, holdAnswer
     });
     var listItemEl2 = document.createElement("li");
     var liBtn2 = document.createElement("button");
-    listItemEl2.className = "";
     liBtn2.textContent = answer3;
     list.appendChild(listItemEl2);
     listItemEl2.appendChild(liBtn2);
@@ -108,7 +116,6 @@ var compileQuestion = function(q, answer1, answer2, answer3, answer4, holdAnswer
     });
     var listItemEl3 = document.createElement("li");
     var liBtn3 = document.createElement("button");
-    listItemEl3.className = "";
     liBtn3.textContent = answer4;
     list.appendChild(listItemEl3)
     listItemEl3.appendChild(liBtn3);
@@ -159,3 +166,8 @@ const answersFour = {
     a4 : "D. One",
     hold: 4
 };
+
+var highScoreObj = {
+    ini: window.document.querySelector("user_input[name='initials']").value,
+    score: timeCount
+}
