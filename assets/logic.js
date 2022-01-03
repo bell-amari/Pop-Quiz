@@ -1,5 +1,6 @@
 // Linked Exsisting HTML with JS
 var section = window.document.querySelector("#quiz_section");
+var viewScore = window.document.querySelector("#high_score_view");
 var startMessage = window.document.querySelector("#start_message");
 var question = window.document.querySelector("#question");
 var list = window.document.querySelector("#list");
@@ -12,10 +13,10 @@ var input = window.document.querySelector("#user_input");
 var saveBtn = window.document.querySelector("#save_btn");
 const wrong = "The answer you have chosen was incorrect";
 const correct = "Great Job! Your answer was correct!";
+var save = "";
 var hold_selection = 0;
 var quizNumber = 0;
 var timeCount = 100;
-var highScores = []; 
 time.textContent = "Time: " + timeCount;
 
 // Runs when button is clicked
@@ -27,8 +28,19 @@ btn.addEventListener("click", function(){
 
 saveBtn.addEventListener("click", function(){
     var listItemEl = document.createElement("li");
-    listItemEl.textContent = highScoreObj.ini + " | " + highScoreObj.score;
+    listItemEl.className = "score";
+    listItemEl.textContent = document.getElementById("user_input").value + " | " + timeCount;
+    save = document.getElementById("user_input").value + " | " + timeCount;
     list.appendChild(listItemEl);
+    saveBtn.remove();
+    saveScore();
+});
+
+viewScore.addEventListener("click", function(){
+    if (localStorage.key("score") === null){
+    alert("No Score Yet");
+    }
+    else alert(localStorage.getItem("scores"));
 });
 
 function checkAnswers(answer){
@@ -71,6 +83,9 @@ function callQuestions(){
             saveBtn.hidden = false;
             break;
     }
+}
+var saveScore = function(){
+    localStorage.setItem("scores", JSON.stringify(save));
 }
 
 var compileQuestion = function(q, answer1, answer2, answer3, answer4, holdAnswer){
@@ -166,8 +181,3 @@ const answersFour = {
     a4 : "D. One",
     hold: 4
 };
-
-var highScoreObj = {
-    ini: window.document.querySelector("user_input[name='initials']").value,
-    score: timeCount
-}

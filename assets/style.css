@@ -56,12 +56,15 @@ a:visited {
 #note {
     text-align: center;
 }
-#input {
+#user_input {
     width: 200px;
     margin-left: 44%;
 }
 #save_btn {
     margin-left: 46%;
     margin-top: 5px;
+}
+.score {
+    margin-left: 48%;
 }
 
